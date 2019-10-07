@@ -6314,9 +6314,7 @@ let foldLeftCompound
           | _ -> E.s (unimp "foldLeftCompound: array with initializer and non-constant length\n")
         end
           
-      | _ when not implicit -> part
-
-      | _ -> E.s (unimp "foldLeftCompound: TArray with initializer and no length")
+      | _  -> part
     end
 
   | TComp (comp, _) -> 
