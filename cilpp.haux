@@ -1,0 +1,54 @@
+\@@addtocsec{htoc}{sec1}{0}{\@print{1}\quad{}Introduction{}}
+\@@addtocsec{htoc}{sec2}{0}{\@print{2}\quad{}Installation{}}
+\@@addtocsec{htoc}{sec3}{0}{\@print{3}\quad{}Compiling C to CIL{}}
+\newlabel{sec-cabs2cil}{{3}{X}}
+\@@addtocsec{htoc}{sec4}{0}{\@print{4}\quad{}How to Use CIL{}}
+\newlabel{sec-cil}{{4}{X}}
+\@@addtocsec{htoc}{sec5}{1}{\@print{4.1}\quad{}Using \t{cilly}, the CIL driver{}}
+\@@addtocsec{htoc}{sec6}{1}{\@print{4.2}\quad{}Using CIL as a library{}}
+\@@addtocsec{htoc}{sec7}{0}{\@print{5}\quad{}CIL API Documentation{}}
+\newlabel{sec-api}{{5}{X}}
+\@@addtocsec{htoc}{sec8}{1}{\@print{5.1}\quad{}Using the visitor{}}
+\newlabel{sec-visitor}{{5.1}{X}}
+\@@addtocsec{htoc}{sec9}{1}{\@print{5.2}\quad{}Interpreted Constructors and Deconstructors{}}
+\@@addtocsec{htoc}{sec10}{2}{\@print{5.2.1}\quad{}Performance considerations for interpreted constructors{}}
+\@@addtocsec{htoc}{sec11}{1}{\@print{5.3}\quad{}Printing and Debugging support{}}
+\@@addtocsec{htoc}{sec12}{1}{\@print{5.4}\quad{}Attributes{}}
+\newlabel{sec-attrib}{{5.4}{X}}
+\@@addtocsec{htoc}{sec14}{0}{\@print{6}\quad{}The CIL Driver{}}
+\newlabel{sec-driver}{{6}{X}}
+\@@addtocsec{htoc}{sec15}{1}{\@print{6.1}\quad{}\t{cilly} Options{}}
+\@@addtocsec{htoc}{sec16}{1}{\@print{6.2}\quad{}\t{cilly.native} Options{}}
+\newlabel{sec-cilly.native-options}{{6.2}{X}}
+\@@addtocsec{htoc}{sec17}{1}{\@print{6.3}\quad{}Internal Options{}}
+\newlabel{sec-cilly-internal-options}{{6.3}{X}}
+\@@addtocsec{htoc}{sec18}{1}{\@print{6.4}\quad{}Specifying a machine model{}}
+\newlabel{sec-cilmachine}{{6.4}{X}}
+\@@addtocsec{htoc}{sec19}{0}{\@print{7}\quad{}Library of CIL Modules{}}
+\newlabel{sec-Extension}{{7}{X}}
+\@@addtocsec{htoc}{sec20}{1}{\@print{7.1}\quad{}Control-Flow Graphs{}}
+\newlabel{sec-cfg}{{7.1}{X}}
+\@@addtocsec{htoc}{sec21}{2}{\@print{7.1.1}\quad{}The CFG module (new in CIL 1.3.5){}}
+\@@addtocsec{htoc}{sec22}{2}{\@print{7.1.2}\quad{}Simplified control flow{}}
+\@@addtocsec{htoc}{sec23}{1}{\@print{7.2}\quad{}Data flow analysis framework{}}
+\@@addtocsec{htoc}{sec24}{1}{\@print{7.3}\quad{}Dominators{}}
+\@@addtocsec{htoc}{sec25}{1}{\@print{7.4}\quad{}Points-to Analysis{}}
+\@@addtocsec{htoc}{sec26}{1}{\@print{7.5}\quad{}Reaching Definitions{}}
+\@@addtocsec{htoc}{sec27}{1}{\@print{7.6}\quad{}Available Expressions{}}
+\@@addtocsec{htoc}{sec28}{1}{\@print{7.7}\quad{}Liveness Analysis{}}
+\@@addtocsec{htoc}{sec29}{1}{\@print{7.8}\quad{}Dead Code Elimination{}}
+\@@addtocsec{htoc}{sec30}{0}{\@print{8}\quad{}Controlling CIL{}}
+\@@addtocsec{htoc}{sec31}{0}{\@print{9}\quad{}GCC Extensions{}}
+\@@addtocsec{htoc}{sec32}{0}{\@print{10}\quad{}CIL Limitations{}}
+\@@addtocsec{htoc}{sec33}{0}{\@print{11}\quad{}Known Bugs and Limitations{}}
+\@@addtocsec{htoc}{sec34}{1}{\@print{11.1}\quad{}Code that CIL won't compile{}}
+\@@addtocsec{htoc}{sec35}{1}{\@print{11.2}\quad{}Code that behaves differently under CIL{}}
+\@@addtocsec{htoc}{sec36}{1}{\@print{11.3}\quad{}Effects of the CIL translation{}}
+\@@addtocsec{htoc}{sec37}{0}{\@print{12}\quad{}Using the merger{}}
+\newlabel{sec-merger}{{12}{X}}
+\@@addtocsec{htoc}{sec38}{0}{\@print{13}\quad{}Using the patcher{}}
+\newlabel{sec-patcher}{{13}{X}}
+\@@addtocsec{htoc}{sec39}{0}{\@print{14}\quad{}Authors{}}
+\@@addtocsec{htoc}{sec40}{0}{\@print{15}\quad{}License{}}
+\@@addtocsec{htoc}{sec41}{0}{\@print{16}\quad{}Bug reports{}}
+\@@addtocsec{htoc}{sec42}{0}{\@print{17}\quad{}Impressum{}}

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.35">
+
+<base target="main">
+<script language="JavaScript">
+<!-- Begin
+function loadTop(url) {
+  parent.location.href= url;
+}
+// -->
+</script><link rel="stylesheet" type="text/css" href="cil.css">
+<title>Library of CIL Modules</title>
+</head>
+<body >
+<a href="cil006.html"><img src="previous_motif.svg" alt="Previous"></a>
+<a href="ciltoc.html"><img src="contents_motif.svg" alt="Up"></a>
+<a href="cil008.html"><img src="next_motif.svg" alt="Next"></a>
+<hr>
+<h2 id="sec19" class="section">7&#X2003;Library of CIL Modules</h2>
+<p> <a id="sec-Extension"></a></p>
+<h3 id="sec20" class="subsection">7.1&#X2003;Control-Flow Graphs</h3>
+<p> <a id="sec-cfg"></a></p><p>The <a href="api/goblint-cil/GoblintCil/index.html#type-stmt">GoblintCil.stmt</a> datatype includes fields for intraprocedural
+control-flow information: the predecessor and successor statements of
+the current statement. This information is not computed by default.
+If you want to use the control-flow graph, or any of the extensions in
+this section that require it, you have to explicitly ask CIL to
+compute the CFG using one of these two methods:</p>
+<h4 id="sec21" class="subsubsection">7.1.1&#X2003;The CFG module (new in CIL 1.3.5)</h4>
+<p>The best way to compute the CFG is with the CFG module. Just invoke
+<a href="api/goblint-cil/GoblintCil/Cfg/index.html#val-computeFileCFG">Cfg.computeFileCFG</a> on your file. The <a href="api/goblint-cil/GoblintCil/Cfg/index.html">Cfg</a> API
+describes the rest of actions you can take with this module, including
+computing the CFG for one function at a time, or printing the CFG in
+<span style="font-family:monospace">dot</span> form.</p>
+<h4 id="sec22" class="subsubsection">7.1.2&#X2003;Simplified control flow</h4>
+<p>CIL can reduce high-level C control-flow constructs like <span style="font-family:monospace">switch</span> and
+<span style="font-family:monospace">continue</span> to lower-level <span style="font-family:monospace">goto</span>s. This completely eliminates some
+possible classes of statements from the program and may make the result
+easier to analyze (e.g., it simplifies data-flow analysis).</p><p>You can invoke this transformation on the command line with
+<span style="font-family:monospace">--domakeCFG</span> or programatically with <a href="api/goblint-cil/GoblintCil/index.html#val-prepareCFG">GoblintCil.prepareCFG</a>.
+After calling Cil.prepareCFG, you can use <a href="api/goblint-cil/GoblintCil/index.html#val-computeCFGInfo">GoblintCil.computeCFGInfo</a>
+to compute the CFG information and find the successor and predecessor
+of each statement.</p><p>For a concrete example, you can see how <span style="font-family:monospace">cilly --domakeCFG</span>
+transforms the following code (note the fall-through in case 1):</p><pre class="verbatim"><span style="color:blue">  int foo (int predicate) {
+    int x = 0;
+    switch (predicate) {
+      case 0: return 111;
+      case 1: x = x + 1;
+      case 2: return (x+3);
+      case 3: break;
+      default: return 222;
+    }
+    return 333;
+  }
+</span></pre><p>
+See the <a href="examples/ex23.txt">CIL output</a> for this
+code fragment</p>
+<h3 id="sec23" class="subsection">7.2&#X2003;Data flow analysis framework</h3>
+<p>The <a href="api/goblint-cil/GoblintCil/Dataflow/index.html">Dataflow</a> module (click for the ocamldoc) contains a
+parameterized framework for forward and backward data flow
+analyses. You provide the transfer functions and this module does the
+analysis. You must compute control-flow information (Section&#X2004;&#X200D;<a href="#sec-cfg">7.1</a>)
+before invoking the Dataflow module.</p>
+<h3 id="sec24" class="subsection">7.3&#X2003;Dominators</h3>
+<p>The module <a href="api/goblint-cil/GoblintCil/Dominators/index.html">Dominators</a> contains the computation of immediate
+dominators. It uses the <a href="api/goblint-cil/GoblintCil/Dataflow/index.html">Dataflow</a> module.</p>
+<h3 id="sec25" class="subsection">7.4&#X2003;Points-to Analysis</h3>
+<p>The module <span style="font-family:monospace">ptranal.ml</span> contains two interprocedural points-to
+analyses for CIL: <span style="font-family:monospace">Olf</span> and <span style="font-family:monospace">Golf</span>. <span style="font-family:monospace">Olf</span> is the default.
+(Switching from <span style="font-family:monospace">olf.ml</span> to <span style="font-family:monospace">golf.ml</span> requires a change in
+<span style="font-family:monospace">Ptranal</span> and a recompiling <span style="font-family:monospace">cilly</span>.)</p><p>The analyses have the following characteristics:
+</p><ul class="itemize"><li class="li-itemize">
+Not based on C types (inferred pointer relationships are sound
+despite most kinds of C casts)
+</li><li class="li-itemize">One level of subtyping
+</li><li class="li-itemize">One level of context sensitivity (Golf only)
+</li><li class="li-itemize">Monomorphic type structures
+</li><li class="li-itemize">Field insensitive (fields of structs are conflated)
+</li><li class="li-itemize">Demand-driven (points-to queries are solved on demand)
+</li><li class="li-itemize">Handle function pointers
+</li></ul><p>The analysis itself is factored into two components: <span style="font-family:monospace">Ptranal</span>,
+which walks over the CIL file and generates constraints, and <span style="font-family:monospace">Olf</span>
+or <span style="font-family:monospace">Golf</span>, which solve the constraints. The analysis is invoked
+with the function <span style="font-family:monospace">Ptranal.analyze_file: Cil.file -&gt;
+unit</span>. This function builds the points-to graph for the CIL file
+and stores it internally. There is currently no facility for clearing
+internal state, so <span style="font-family:monospace">Ptranal.analyze_file</span> should only be called
+once.</p><p>The constructed points-to graph supports several kinds of queries,
+including alias queries (may two expressions be aliased?) and
+points-to queries (to what set of locations may an expression point?).</p><p>The main interface with the alias analysis is as follows:
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">Ptranal.may_alias: Cil.exp -&gt; Cil.exp -&gt; bool</span>. If
+<span style="font-family:monospace">true</span>, the two expressions may have the same value.
+</li><li class="li-itemize"><span style="font-family:monospace">Ptranal.resolve_lval: Cil.lval -&gt; (Cil.varinfo
+list)</span>. Returns the list of variables to which the given
+left-hand value may point.
+</li><li class="li-itemize"><span style="font-family:monospace">Ptranal.resolve_exp: Cil.exp -&gt; (Cil.varinfo list)</span>.
+Returns the list of variables to which the given expression may
+point.
+</li><li class="li-itemize"><span style="font-family:monospace">Ptranal.resolve_funptr: Cil.exp -&gt; (Cil.fundec
+list)</span>. Returns the list of functions to which the given
+expression may point.
+</li></ul><p>The precision of the analysis can be customized by changing the values
+of several flags:</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">Ptranal.no_sub: bool ref</span>.
+If <span style="font-family:monospace">true</span>, subtyping is disabled. Associated commandline option:
+<span style="font-weight:bold">--ptr_unify</span>.
+</li><li class="li-itemize"><span style="font-family:monospace">Ptranal.analyze_mono: bool ref</span>.
+(Golf only) If <span style="font-family:monospace">true</span>, context sensitivity is disabled and the
+analysis is effectively monomorphic. Commandline option:
+<span style="font-weight:bold">--ptr_mono</span>.
+</li><li class="li-itemize"><span style="font-family:monospace">Ptranal.smart_aliases: bool ref</span>.
+(Golf only) If <span style="font-family:monospace">true</span>, &#X201C;smart&#X201D; disambiguation of aliases is
+enabled. Otherwise, aliases are computed by intersecting points-to
+sets. This is an experimental feature.
+</li><li class="li-itemize"><span style="font-family:monospace">Ptranal.model_strings: bool ref</span>.
+Make the alias analysis model string constants by treating them as
+pointers to chars. Commandline option: <span style="font-weight:bold">--ptr_model_strings</span>
+</li><li class="li-itemize"><span style="font-family:monospace">Ptranal.conservative_undefineds: bool ref</span>.
+Make the most pessimistic assumptions about globals if an undefined
+function is present. Such a function can write to every global
+variable. Commandline option: <span style="font-weight:bold">--ptr_conservative</span>
+</li></ul><p>In practice, the best precision/efficiency tradeoff is achieved by
+setting
+</p><pre class="verbatim">  Ptranal.no_sub = false
+  Ptranal.analyze_mono = true
+  Ptranal.smart_aliases = false
+</pre><p>
+These are the
+default values of the flags.</p><p>There are also a few flags that can be used to inspect or serialize
+the results of the analysis.
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">Ptranal.debug_may_aliases</span>.
+Print the may-alias relationship of each pair of expressions in the
+program. Commandline option: <span style="font-weight:bold">--ptr_may_aliases</span>.
+</li><li class="li-itemize"><span style="font-family:monospace">Ptranal.print_constraints: bool ref</span>.
+If <span style="font-family:monospace">true</span>, the analysis will print each constraint as it is
+generated.
+</li><li class="li-itemize"><span style="font-family:monospace">Ptranal.print_types: bool ref</span>.
+If <span style="font-family:monospace">true</span>, the analysis will print the inferred type of each
+variable in the program.<p>If <span style="font-family:monospace">Ptranal.analyze_mono</span> and <span style="font-family:monospace">Ptranal.no_sub</span> are both
+<span style="font-family:monospace">true</span>, this output is sufficient to reconstruct the points-to
+graph. One nice feature is that there is a pretty printer for
+recursive types, so the print routine does not loop.
+</p></li><li class="li-itemize"><span style="font-family:monospace">Ptranal.compute_results: bool ref</span>.
+If <span style="font-family:monospace">true</span>, the analysis will print out the points-to set of each
+variable in the program. This will essentially serialize the
+points-to graph.
+</li></ul>
+<h3 id="sec26" class="subsection">7.5&#X2003;Reaching Definitions</h3>
+<p>The <span style="font-family:monospace">reachingdefs.ml</span> module uses the dataflow framework and CFG
+information to calculate the definitions that reach each
+statement. After computing the CFG (Section&#X2004;&#X200D;<a href="#sec-cfg">7.1</a>) and calling
+<span style="font-family:monospace">computeRDs</span> on a
+function declaration, <span style="font-family:monospace">ReachingDef.stmtStartData</span> will contain a
+mapping from statement IDs to data about which definitions reach each
+statement. In particular, it is a mapping from statement IDs to a
+triple the first two members of which are used internally. The third
+member is a mapping from variable IDs to Sets of integer options. If
+the set contains <span style="font-family:monospace">Some(i)</span>, then the definition of that variable
+with ID <span style="font-family:monospace">i</span> reaches that statement. If the set contains <span style="font-family:monospace">None</span>,
+then there is a path to that statement on which there is no definition
+of that variable. Also, if the variable ID is unmapped at a
+statement, then no definition of that variable reaches that statement.</p><p>To summarize, reachingdefs.ml has the following interface:
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">computeRDs</span> &#X2013; Computes reaching definitions. Requires that
+CFG information has already been computed for each statement.
+</li><li class="li-itemize"><span style="font-family:monospace">ReachingDef.stmtStartData</span> &#X2013; contains reaching
+definition data after <span style="font-family:monospace">computeRDs</span> is called.
+</li><li class="li-itemize"><span style="font-family:monospace">ReachingDef.defIdStmtHash</span> &#X2013; Contains a mapping
+from definition IDs to the ID of the statement in which
+the definition occurs.
+</li><li class="li-itemize"><span style="font-family:monospace">getRDs</span> &#X2013; Takes a statement ID and returns
+reaching definition data for that statement.
+</li><li class="li-itemize"><span style="font-family:monospace">instrRDs</span> &#X2013; Takes a list of instructions and the
+definitions that reach the first instruction, and for
+each instruction calculates the definitions that reach
+either into or out of that instruction.
+</li><li class="li-itemize"><span style="font-family:monospace">rdVisitorClass</span> &#X2013; A subclass of nopCilVisitor that
+can be extended such that the current reaching definition
+data is available when expressions are visited through
+the <span style="font-family:monospace">get_cur_iosh</span> method of the class.
+</li></ul>
+<h3 id="sec27" class="subsection">7.6&#X2003;Available Expressions</h3>
+<p>The <span style="font-family:monospace">availexps.ml</span> module uses the dataflow framework and CFG
+information to calculate something similar to a traditional available
+expressions analysis. After <span style="font-family:monospace">computeAEs</span> is called following a CFG
+calculation (Section&#X2004;&#X200D;<a href="#sec-cfg">7.1</a>), <span style="font-family:monospace">AvailableExps.stmtStartData</span> will
+contain a mapping
+from statement IDs to data about what expressions are available at
+that statement. The data for each statement is a mapping for each
+variable ID to the whole expression available at that point(in the
+traditional sense) which the variable was last defined to be. So,
+this differs from a traditional available expressions analysis in that
+only whole expressions from a variable definition are considered rather
+than all expressions.</p><p>The interface is as follows:
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">computeAEs</span> &#X2013; Computes available expressions. Requires
+that CFG information has already been comptued for each statement.
+</li><li class="li-itemize"><span style="font-family:monospace">AvailableExps.stmtStartData</span> &#X2013; Contains available
+expressions data for each statement after <span style="font-family:monospace">computeAEs</span> has been
+called.
+</li><li class="li-itemize"><span style="font-family:monospace">getAEs</span> &#X2013; Takes a statement ID and returns
+available expression data for that statement.
+</li><li class="li-itemize"><span style="font-family:monospace">instrAEs</span> &#X2013; Takes a list of instructions and
+the availalbe expressions at the first instruction, and
+for each instruction calculates the expressions available
+on entering or exiting each instruction.
+</li><li class="li-itemize"><span style="font-family:monospace">aeVisitorClass</span> &#X2013; A subclass of nopCilVisitor that
+can be extended such that the current available expressions
+data is available when expressions are visited through the
+<span style="font-family:monospace">get_cur_eh</span> method of the class.
+</li></ul>
+<h3 id="sec28" class="subsection">7.7&#X2003;Liveness Analysis</h3>
+<p>The <span style="font-family:monospace">liveness.ml</span> module uses the dataflow framework and
+CFG information to calculate which variables are live at
+each program point. After <span style="font-family:monospace">computeLiveness</span> is called
+following a CFG calculation (Section&#X2004;&#X200D;<a href="#sec-cfg">7.1</a>), <span style="font-family:monospace">LiveFlow.stmtStartData</span> will
+contain a mapping for each statement ID to a set of <span style="font-family:monospace">varinfo</span>s
+for varialbes live at that program point.</p><p>The interface is as follows:
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">computeLiveness</span> &#X2013; Computes live variables. Requires
+that CFG information has already been computed for each statement.
+</li><li class="li-itemize"><span style="font-family:monospace">LiveFlow.stmtStartData</span> &#X2013; Contains live variable data
+for each statement after <span style="font-family:monospace">computeLiveness</span> has been called.
+</li></ul><p>Also included in this module is a command line interface that
+will cause liveness data to be printed to standard out for
+a particular function or label.</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">--doliveness</span> &#X2013; Instructs cilly to comptue liveness
+information and to print on standard out the variables live
+at the points specified by <span style="font-family:monospace">--live_func</span> and <span style="font-family:monospace">live_label</span>.
+If both are ommitted, then nothing is printed.
+</li><li class="li-itemize"><span style="font-family:monospace">--live_func</span> &#X2013; The name of the function whose
+liveness data is of interest. If <span style="font-family:monospace">--live_label</span> is ommitted,
+then data for each statement is printed.
+</li><li class="li-itemize"><span style="font-family:monospace">--live_label</span> &#X2013; The name of the label at which
+the liveness data will be printed.
+</li></ul>
+<h3 id="sec29" class="subsection">7.8&#X2003;Dead Code Elimination</h3>
+<p>The module <span style="font-family:monospace">deadcodeelim.ml</span> uses the reaching definitions
+analysis to eliminate assignment instructions whose results
+are not used. The interface is as follows:</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">elim_dead_code</span> &#X2013; Performs dead code elimination
+on a function. Requires that CFG information has already
+been computed (Section&#X2004;&#X200D;<a href="#sec-cfg">7.1</a>).
+</li><li class="li-itemize"><span style="font-family:monospace">dce</span> &#X2013; Performs dead code elimination on an
+entire file. Requires that CFG information has already
+been computed.
+</li></ul>
+<hr>
+<a href="cil006.html"><img src="previous_motif.svg" alt="Previous"></a>
+<a href="ciltoc.html"><img src="contents_motif.svg" alt="Up"></a>
+<a href="cil008.html"><img src="next_motif.svg" alt="Next"></a>
+</body>
+</html>

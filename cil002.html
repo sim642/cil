@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.35">
+
+<base target="main">
+<script language="JavaScript">
+<!-- Begin
+function loadTop(url) {
+  parent.location.href= url;
+}
+// -->
+</script><link rel="stylesheet" type="text/css" href="cil.css">
+<title>Installation</title>
+</head>
+<body >
+<a href="cil001.html"><img src="previous_motif.svg" alt="Previous"></a>
+<a href="ciltoc.html"><img src="contents_motif.svg" alt="Up"></a>
+<a href="cil003.html"><img src="next_motif.svg" alt="Next"></a>
+<hr>
+<h2 id="sec2" class="section">2&#X2003;Installation</h2>
+<p><span style="font-weight:bold">The recommended way to install goblint-cil is via the </span><span style="font-weight:bold"><span style="font-family:monospace">goblint-cil</span></span><span style="font-weight:bold"> OPAM package </span></p><p>Alternately, you can download an up to the minute version of CIL from our git repository at:</p><p>&#X2003;&#X2003;&#X2003;<code class="verb">git clone https://github.com/goblint/cil.git</code></p><p>First create a local opam switch and install all dependencies:</p><p>&#X2003;&#X2003;&#X2003;<code class="verb">opam switch create .</code>
+Then, run the following commands to build and install <span style="font-family:monospace">goblint-cil</span>:</p><p>&#X2003;&#X2003;&#X2003;<code class="verb">./configure</code><br>
+&#X2003;&#X2003;&#X2003;<code class="verb">make</code><br>
+&#X2003;&#X2003;&#X2003;<code class="verb">make test       # runs the regression test suite, optional</code><br>
+&#X2003;&#X2003;&#X2003;<code class="verb">make install    # as root or using sudo</code><br>
+
+If you want to install to some other directory, you can tweak the prefix
+during the configure step. For instance, to install in your local directory:</p><p><span style="font-family:monospace">./configure --prefix=&#X2018;opam config var prefix&#X2018;</span></p><p>The <span style="font-family:monospace">configure</span> script tries to find appropriate defaults for your system.
+You can control its actions by passing the following arguments:
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">CC=foo</span> Specifies the path for the <span style="font-family:monospace">gcc</span> executable. By default
+whichever version is in the PATH is used.
+</li></ul><p>CIL requires an underlying C compiler and preprocessor. CIL depends on the
+underlying compiler and machine for the sizes and alignment of types. The
+installation procedure for CIL queries the underlying compiler for
+architecture and compiler dependent configuration parameters, such as the size
+of a pointer or the particular alignment rules for structure fields. (This
+means, of course, that you should re-run <span style="font-family:monospace">./configure</span> when you move CIL to
+another machine.)</p>
+<hr>
+<a href="cil001.html"><img src="previous_motif.svg" alt="Previous"></a>
+<a href="ciltoc.html"><img src="contents_motif.svg" alt="Up"></a>
+<a href="cil003.html"><img src="next_motif.svg" alt="Next"></a>
+</body>
+</html>

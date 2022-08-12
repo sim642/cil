@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.35">
+
+<base target="main">
+<script language="JavaScript">
+<!-- Begin
+function loadTop(url) {
+  parent.location.href= url;
+}
+// -->
+</script><link rel="stylesheet" type="text/css" href="cil.css">
+<title>Introduction</title>
+</head>
+<body >
+<a href="ciltoc.html"><img src="contents_motif.svg" alt="Up"></a>
+<a href="cil002.html"><img src="next_motif.svg" alt="Next"></a>
+<hr>
+<h2 id="sec1" class="section">1&#X2003;Introduction</h2>
+<p><span style="font-weight:bold">This a fork of the CIL tool</span> maintained by the team behind the static analyzer <a href="javascript:loadTop('https://goblint.in.tum.de')">Goblint</a>, <span style="font-weight:bold">which we refer to as goblint-CIL (CIL for short).</span></p><p>CIL (<span style="font-weight:bold">C</span> <span style="font-weight:bold">I</span>ntermediate <span style="font-weight:bold">L</span>anguage) is a high-level representation along with a set of tools that permit easy analysis and source-to-source
+transformation of C programs.</p><p>The original CIL has a Source Forge page: <a href="javascript:loadTop('http://sourceforge.net/projects/cil')">http://sourceforge.net/projects/cil</a>.</p><p>goblint-cil is developed on Github: <a href="javascript:loadTop('https://github.com/goblint/cil/')">https://github.com/goblint/cil/</a>.</p><p>Compared with the original CIL there are some <em>breaking</em> changes:</p><ul class="itemize"><li class="li-itemize">
+Support for C99 and C11.
+</li><li class="li-itemize">Compatibility with modern OCaml versions.
+</li><li class="li-itemize">Use Zarith instead of Num and use that for integer constants.
+</li><li class="li-itemize">Improved locations with columns and spans.
+</li><li class="li-itemize">Removal of unmaintained extensions and MSVC support.
+</li><li class="li-itemize">Use dune instead of make and ocamlbuild.
+</li><li class="li-itemize">Many bug fixes.
+</li></ul><p>CIL is both lower-level than abstract-syntax trees, by clarifying ambiguous
+constructs and removing redundant ones, and also higher-level than typical
+intermediate languages designed for compilation, by maintaining types and a
+close relationship with the source program. The main advantage of CIL is that
+it compiles all valid C programs into a few core constructs with a very clean
+semantics. Also CIL has a syntax-directed type system that makes it easy to
+analyze and manipulate C programs. Furthermore, the CIL front-end is able to
+process not only ANSI-C programs but also those using GNU C
+extensions. If you do not use CIL and want instead to use just a C parser and
+analyze programs expressed as abstract-syntax trees then your analysis will
+have to handle a lot of ugly corners of the language (let alone the fact that
+parsing C itself is not a trivial task). See Section&#X2004;&#X200D;<a >??</a> for some
+examples of such extreme programs that CIL simplifies for you.</p><p>In essence, CIL is a highly-structured, &#X201C;clean&#X201D; subset of C. CIL features a
+reduced number of syntactic and conceptual forms. For example, all looping
+constructs are reduced to a single form, all function bodies are given
+explicit <span style="font-family:monospace">return</span> statements, syntactic sugar like <span style="font-family:monospace">"-&gt;"</span> is
+eliminated and function arguments with array types become pointers. (For an
+extensive list of how CIL simplifies C programs, see Section&#X2004;&#X200D;<a href="cil003.html#sec-cabs2cil">3</a>.)
+This reduces the number of cases that must be considered when manipulating a C
+program. CIL also separates type declarations from code and flattens scopes
+within function bodies. This structures the program in a manner more amenable
+to rapid analysis and transformation. CIL computes the types of all program
+expressions, and makes all type promotions and casts explicit. CIL supports
+some GCC extensions (a notable exception being nested functions).
+Finally, CIL organizes C&#X2019;s imperative features into expressions, instructions
+and statements based on the presence and absence of side-effects and
+control-flow. Every statement can be annotated with successor and predecessor
+information. Thus CIL provides an integrated program representation that can
+be used with routines that require an AST (e.g. type-based analyses and
+pretty-printers), as well as with routines that require a CFG (e.g., dataflow
+analyses).</p><p>CIL comes accompanied by a number of Perl scripts that perform generally
+useful operations on code:
+</p><ul class="itemize"><li class="li-itemize">
+A <a href="cil006.html#sec-driver">driver</a> which behaves as the <span style="font-family:monospace">gcc</span> compiler and can invoke the preprocessor followed by the CIL
+application. The advantage of this script is that you can easily use CIL and
+the analyses written for CIL with existing make files.
+</li><li class="li-itemize">A <a href="merger.html#sec-merger">whole-program merger</a> that you can use as a
+replacement for your compiler and it learns all the files you compile when you
+make a project and merges all of the preprocessed source files into a single
+one. This makes it easy to do whole-program analysis.
+</li><li class="li-itemize">A <a href="patcher.html#sec-patcher">patcher</a> makes it easy to create modified
+copies of the system include files. The CIL driver can then be told to use
+these patched copies instead of the standard ones.
+</li></ul><p>CIL is relatively independent on the underlying machine and compiler. When
+you build it CIL will configure itself according to the underlying compiler.
+However, CIL has only been tested on Intel x86 using the gcc compiler on Linux
+and cygwin and using the MS Visual C compiler. (See below for specific
+versions of these compilers that we have used CIL for.)</p><p>The largest application the authors of the original CIL have used CIL for is
+<a href="javascript:loadTop('https://dl.acm.org/doi/10.1145/1065887.1065892')">CCured</a>, a compiler that compiles C code into
+type-safe code by analyzing your pointer usage and inserting runtime checks in
+the places that cannot be guaranteed statically to be type safe.</p><p>You can also use CIL to &#X201C;compile&#X201D; code that uses GCC extensions (e.g. the
+Linux kernel) into standard C code.</p><p>If you want to cite CIL in your research writings, please refer to the paper &#X201C;CIL:
+Intermediate Language and Tools for Analysis and Transformation of C
+Programs&#X201D; by George C. Necula, Scott McPeak, S.P. Rahul and Westley Weimer,
+in &#X201C;Proceedings of Conference on Compiler Construction&#X201D;, 2002
+by the authors of the original CIL.</p>
+<hr>
+<a href="ciltoc.html"><img src="contents_motif.svg" alt="Up"></a>
+<a href="cil002.html"><img src="next_motif.svg" alt="Next"></a>
+</body>
+</html>

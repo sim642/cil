@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>attribute_checker (goblint-cil.GoblintCil.Ciltools.attribute_checker)</title><link rel="stylesheet" href="../../../../odoc.css"/><meta charset="utf-8"/><meta name="generator" content="odoc 2.1.1"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><script src="../../../../highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body class="odoc"><nav class="odoc-nav"><a href="../index.html">Up</a> – <a href="../../../index.html">goblint-cil</a> &#x00BB; <a href="../../index.html">GoblintCil</a> &#x00BB; <a href="../index.html">Ciltools</a> &#x00BB; attribute_checker</nav><header class="odoc-preamble"><h1>Class <code><span>Ciltools.attribute_checker</span></code></h1></header><div class="odoc-content"><div class="odoc-spec"><div class="spec inherit"><code><span><span class="keyword">inherit</span> <span class="xref-unresolved">GoblintCil__Cil.nopCilVisitor</span></span></code></div></div><div class="odoc-spec"><div class="spec method" id="method-vtype" class="anchored"><a href="#method-vtype" class="anchor"></a><code><span><span class="keyword">method</span> vtype : <span><span>&lt; queueInstr : <span><span><span class="xref-unresolved">GoblintCil__Cil.instr</span> list</span> <span class="arrow">&#45;&gt;</span></span> unit
+                 ; unqueueInstr : <span>unit <span class="arrow">&#45;&gt;</span></span> <span><span class="xref-unresolved">GoblintCil__Cil.instr</span> list</span>
+                 ; vattr : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.attribute</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span><span class="xref-unresolved">GoblintCil__Cil.attribute</span> list</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vattrparam : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.attrparam</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.attrparam</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vblock : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.block</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.block</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vexpr : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.exp</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.exp</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vfunc : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.fundec</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.fundec</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vglob : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.global</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span><span class="xref-unresolved">GoblintCil__Cil.global</span> list</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vinit : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.varinfo</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.offset</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.init</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.init</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vinitoffs : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.offset</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.offset</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vinst : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.instr</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span><span class="xref-unresolved">GoblintCil__Cil.instr</span> list</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vlval : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.lval</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.lval</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; voffs : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.offset</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.offset</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vstmt : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.stmt</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.stmt</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vtype : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.typ</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.typ</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vvdec : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.varinfo</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.varinfo</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>
+                 ; vvrbl : 
+                   <span><span class="xref-unresolved">GoblintCil__Cil.varinfo</span> <span class="arrow">&#45;&gt;</span></span>
+                   <span><span class="xref-unresolved">GoblintCil__Cil.varinfo</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span>.. &gt;</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span class="xref-unresolved">GoblintCil__Cil.typ</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span class="xref-unresolved">GoblintCil__Cil.typ</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span></span></code></div></div><div class="odoc-spec"><div class="spec method" id="method-vattr" class="anchored"><a href="#method-vattr" class="anchor"></a><code><span><span class="keyword">method</span> vattr : <span><span class="type-var">'a</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span class="xref-unresolved">GoblintCil__Cil.attribute</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><span class="xref-unresolved">GoblintCil__Cil.attribute</span> list</span> <span class="xref-unresolved">GoblintCil__Cil.visitAction</span></span></span></code></div></div></div></body></html>
